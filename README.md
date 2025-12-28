@@ -1,20 +1,38 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Plannotator
 
-# Run and deploy your AI Studio app
+A visual plan review UI for Claude Code that intercepts `ExitPlanMode` and lets you annotate, approve, or provide structured feedback.
 
-This contains everything you need to run your app locally.
+## Monorepo Structure
 
-View your app in AI Studio: https://ai.studio/apps/drive/1T58blWi735nbP9jxqohfRrCa584GUPIB
+```
+apps/
+  hooks/      # Claude Code hook integration (single-file build)
+  portal/     # GitHub Pages sharing portal
+  marketing/  # Landing page
+packages/
+  editor/     # Main App.tsx + styles
+  ui/         # Shared components, utils, types
+```
 
-## Run Locally
+## Development
 
-**Prerequisites:**  Node.js
+```bash
+bun install
 
+# Run any app
+bun run dev:hooks      # port 3000
+bun run dev:portal     # port 3001
+bun run dev:marketing  # port 3002
+```
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## Build
+
+```bash
+bun run build:hooks      # Single-file HTML for hook server
+bun run build:portal     # Static build for GitHub Pages
+bun run build:marketing  # Static build for marketing site
+```
+
+## Hook Integration
+
+See `apps/hooks/shell/exit-plan-mode.sh` for the Claude Code hook script.
