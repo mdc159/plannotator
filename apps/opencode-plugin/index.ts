@@ -52,6 +52,14 @@ export const PlannotatorPlugin: Plugin = async (ctx) => {
 
   return {
     "experimental.chat.system.transform": async (_input, output) => {
+      // Skip adding Plan Submission prompt for title generation requests
+      // Title generation has a specific system prompt containing "title generator"
+      // and typically has no tools
+      const existingSystem = output.system.join("\n").toLowerCase();
+      if (existingSystem.includes("title generator") || existingSystem.includes("generate a title")) {
+        return; // Skip - this is a title generation request
+      }
+
       output.system.push(`
 ## Plan Submission
 
